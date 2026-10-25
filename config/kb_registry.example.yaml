@@ -1,0 +1,63 @@
+# kb_registry.yaml: one entry per knowledge base (KB).
+#
+# Copy this file to config/kb_registry.yaml (gitignored) and edit it, or point KB_REGISTRY at
+# your own file. Relative paths resolve against KB_HOME (default: the repo folder).
+#
+# Rules
+# - Every KB gets its own Qdrant collection (default `<slug>_kb`). Never rename a collection
+#   afterwards: point IDs are derived from its name.
+# - status: active | paused | archived. Only active KBs are refreshed by kb_refresh.py.
+# - golden_queries: 3-5 real questions. `expect` is a phrase from the section that answers the
+#   question (not from the title or file name, those appear in every chunk of a document),
+#   `expect_file` is a part of the expected file name. The eval also runs off-topic control
+#   questions and warns "not discriminative" if an expectation matches there too.
+#
+# All keys (defaults in brackets):
+#   title, description           free text
+#   collection                   [<slug>_kb]
+#   status                       [active]
+#   created                      "YYYY-MM-DD"
+#   content_dirs                 folders with the .md files (required)
+#   include                      [["*.md"]]
+#   sources_config               JSON file with web sources for kb_harvest.py (schema: kb_harvest.py)
+#   allow_youtube                [false] YouTube transcripts, see README "YouTube transcripts"
+#   advisor                      name of the generated advisor agent
+#   default_trust                [medium] high | medium | low
+#   context_prefix               [true] prepend "Title > H1 > H2" to the text that is embedded
+#   chunk_size, chunk_overlap    [1000, 120] characters
+#   recency_weight               [0.3] 0 = off, max 0.8
+#   half_life_days               [365] fast-moving domains: 180
+#   control_queries              [3 built-in off-topic questions] list of strings
+#   refresh:                     {enabled [auto], refetch_days [90], curation_days [90]}
+
+kbs:
+  demo:
+    title: "The Archivists of Vellmoor (demo rules)"
+    description: "Rules, FAQ and errata of a fictional cooperative board game. Ships with the repo and works offline."
+    status: active
+    created: "2026-10-25"
+    content_dirs:
+      - examples/demo/docs
+    default_trust: high
+    golden_queries:
+      - {q: "How many folio cards does each archivist get in a two-player game?", expect: "each archivist starts with five folio cards", expect_file: "02-setup"}
+      - {q: "What happens when the blight marker reaches space 12?", expect: "the blight reaches the founders' vault", expect_file: "05-ink-blight"}
+      - {q: "Can archivists in different wings lend each other cards?", expect: "only between archivists in the same wing", expect_file: "09-faq"}
+      - {q: "What is the Scribe's hand limit after the errata?", expect: "hand limit of eight", expect_file: "10-errata"}
+      - {q: "When do the archivists win the game?", expect: "all five collections carry a restoration marker", expect_file: "06-winning"}
+
+  demo-web:
+    title: "Archive preservation (online harvest example)"
+    description: "Eight preservation pages of the U.S. National Archives, fetched into kb/demo-web/harvest. Paused: set status to active to try the harvest."
+    status: paused
+    created: "2026-10-25"
+    content_dirs:
+      - kb/demo-web/harvest
+    sources_config: examples/harvest/sources.json
+    default_trust: medium
+    golden_queries:
+      - {q: "How should mold be removed from records?", expect: "vacuum cleaner equipped with a hepa filter", expect_file: "mold-and-records"}
+      - {q: "What humidity should family papers be stored at?", expect: "below 65% to prevent mold growth", expect_file: "storing-family-papers"}
+      - {q: "Should I wear gloves when handling photographs?", expect: "handle photographs and negatives with gloves", expect_file: "handling-family-papers"}
+      - {q: "How should I back up my digitized family photos?", expect: "three copies, stored on two different media", expect_file: "digitizing-family-papers"}
+      - {q: "Which glass should be used to frame an original document?", expect: "ultraviolet filtering glass or acrylic", expect_file: "displaying-family-papers"}

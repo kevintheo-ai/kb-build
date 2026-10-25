@@ -1,0 +1,11 @@
+# Local Qdrant for kb-build, reachable from this machine only.
+# Data lives in ./qdrant_storage (gitignored). Another port: QDRANT_PORT=6399 docker compose up -d
+# (then export QDRANT_URL=http://127.0.0.1:6399).
+services:
+  qdrant:
+    image: qdrant/qdrant:v1.16.1
+    ports:
+      - "127.0.0.1:${QDRANT_PORT:-6333}:6333"
+    volumes:
+      - ./qdrant_storage:/qdrant/storage
+    restart: unless-stopped

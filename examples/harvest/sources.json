@@ -1,0 +1,22 @@
+{
+  "sources": [
+    {
+      "name": "U.S. National Archives preservation pages",
+      "slug": "archives-gov-preservation",
+      "affiliation": "U.S. National Archives and Records Administration",
+      "default_topic": "preservation",
+      "trust": "medium",
+      "living_doc": true,
+      "urls": [
+        {"url": "https://www.archives.gov/preservation/holdings-maintenance/mold", "title": "Mold and records", "topic": "mold"},
+        {"url": "https://www.archives.gov/preservation/family-archives", "title": "Caring for family archives", "topic": "family-archives"},
+        {"url": "https://www.archives.gov/preservation/family-archives/handling", "title": "Handling family papers and photographs", "topic": "handling"},
+        {"url": "https://www.archives.gov/preservation/family-archives/storing", "title": "Storing family papers and photographs", "topic": "storage"},
+        {"url": "https://www.archives.gov/preservation/family-archives/displaying", "title": "Displaying family papers and photographs", "topic": "display"},
+        {"url": "https://www.archives.gov/preservation/family-archives/digitizing", "title": "Digitizing family papers and photographs", "topic": "digitizing"},
+        {"url": "https://www.archives.gov/preservation/family-archives/repairing", "title": "Repairing damage to family papers and photographs", "topic": "repair"},
+        {"url": "https://www.archives.gov/preservation/family-archives/mold-insects", "title": "Moldy or insect-infested family papers and photographs", "topic": "mold"}
+      ]
+    }
+  ]
+}

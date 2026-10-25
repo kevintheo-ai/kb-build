@@ -1,0 +1,13 @@
+# Your data and your registry never go into git: harvested pages belong to their authors.
+/kb/
+/state/
+/config/kb_registry.yaml
+/qdrant_storage/
+
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.DS_Store
+.claude/settings.local.json

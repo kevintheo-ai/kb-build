@@ -1,0 +1,22 @@
+# kb-build: pinned to the versions this repo is tested with (Python 3.11+).
+#
+# Linux without a GPU: install the CPU build of torch first, otherwise pip pulls large CUDA wheels:
+#   pip install torch==2.11.0 --index-url https://download.pytorch.org/whl/cpu
+#
+# After the install, download the embedding model once (about 2.3 GB):
+#   python scripts/bge_embedder.py
+FlagEmbedding==1.4.0
+huggingface-hub==1.5.0
+langchain-core==1.2.19
+langchain-text-splitters==1.1.1
+PyYAML==6.0.2
+qdrant-client==1.17.0
+trafilatura==2.1.0
+htmldate==1.10.0
+pypdf==6.7.5
+youtube-transcript-api==1.2.4
+sentence-transformers==5.4.1
+torch==2.11.0
+transformers==5.5.4
+# tests
+pytest==9.0.2
