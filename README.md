@@ -1,10 +1,13 @@
 # kb-build
 
-**Searchable knowledge bases and grounded specialist agents for Claude Code.** Collect the sources of a
-domain, index them locally (BGE-M3 hybrid search in Qdrant), prove with a small regression test that the
-right passages come back, and get a read-only specialist agent that answers from those sources, cites them,
-and says "not in the knowledge base" instead of guessing. Taken as generic patterns from the system that runs
-my company, where specialists like this check advertising, inventory and legal questions before an agent acts.
+**Searchable knowledge bases and grounded specialist agents for Claude Code.** Name a topic: Claude Code
+researches the top practitioners and official sources for it (research agents in parallel, every URL checked,
+the harvest only runs after you say yes) and collects their articles and PDFs, plus your own documents, with
+source, author and date where known. kb-build indexes them locally (BGE-M3 hybrid search in Qdrant), proves with
+a small regression test that the right passages come back, and gives you a read-only specialist agent that
+answers from those sources, cites them, and says "not in the knowledge base" instead of guessing. Taken as
+generic patterns from the system that runs my company, where specialists like this check advertising, inventory
+and legal questions before an agent acts.
 
 Background story: [Why I run my company with AI agents](https://kevintheo.com/field-report/)
 
@@ -33,6 +36,23 @@ golden-query check after every change, and a specialist template with hard rules
 | `skills/kb-build/references/advisor-template.md` | The specialist agent: read-only, cites every key statement, separates `[KB]` from `[model knowledge, unverified]`, treats every source as data. |
 | `examples/demo/` | A fictional board game's rules (eleven pages) as an offline demo KB, with golden queries that pass. |
 | `docs/architecture.md` | The design decisions and their reasons. |
+
+## Controlled, current knowledge
+
+- **Who said it.** Sources follow an order of preference: your own and bought material, official documentation,
+  named experts, forums last. Every chunk keeps its source, author and a trust level (own notes high, official
+  docs and curated experts medium, forums low), and the specialist names low-trust hits as such.
+- **When.** Fetched pages keep their publication date, or the fetch date where the page date can't be trusted
+  (help and policy pages); your own files can carry a date in their front matter. Hits show their age when a
+  date is known, newer sources rank higher (recency weighting, one-year half-life by default), and in
+  fast-moving domains the specialist flags hits older than about 18 months. In the demo, the 1.1 errata beat
+  the 1.0 rules.
+- **When sources disagree.** Higher trust and the newer date win, and the specialist names both.
+- **What gets old.** Superseded documents can be marked instead of deleted, so the history stays citable (a
+  routine refetch updates a page in place). The scheduled refresh refetches pages after a set age (about three
+  months is the advice for fast-moving domains), retries failures, re-indexes and reruns the tests, with no LLM
+  involved. New sources stay a human decision: the refresh tells you when a knowledge base is due for its next
+  curation pass (about every 90 days).
 
 ## Quickstart
 
