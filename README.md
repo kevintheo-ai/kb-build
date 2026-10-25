@@ -131,4 +131,4 @@ Not a framework, not a hosted service, not affiliated with any model vendor. It 
 every day, stripped of everything specific to my company, published as-is under MIT. Issues and war stories
 welcome.
 
-— Kevin Theo ([LinkedIn](https://www.linkedin.com/in/kevin-theobald-7946871a2) · [kevintheo.com](https://kevintheo.com))
+— Kevin Theo ([LinkedIn](https://www.linkedin.com/in/kevintheo) · [kevintheo.com](https://kevintheo.com))
